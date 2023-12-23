@@ -1,0 +1,149 @@
+## Importar librerias
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+## Importar la tabla de excel
+ruta_excel= "C:\\Users\\usuario\\Documents\\ADSO Juan Jose Jaramillo\\EAD\\Estadistica 2\\Latinoamerica.xlsx"
+
+## Seleccionar la hoja de excel en donde se encuentra la tabla
+base_datos = pd.read_excel(ruta_excel,sheet_name="BD2023")
+
+## Definir las variables para cada columna
+ter="Dias_respuesta"
+pais="País"
+estado_orden="Estado Orden"
+reparacion="Reparacion"
+individuos= "Producto"
+serial="País"
+unidades="Cant. PL."
+fecha_i="Fecha Ingreso"
+
+
+## Definir las condiciones,(valores >=0)
+datos_filtrados=base_datos[base_datos[ter]>=0]
+
+prueba=datos_filtrados[ter].mean()
+print(f"Prueba{prueba}")
+## Calculo de promedio, mediana, cuartiles, maximos, minimos por paises
+promedio_por_pais=datos_filtrados.groupby(pais)[ter].mean()
+mediana_por_pais=datos_filtrados.groupby(pais)[ter].median()
+maximo_por_pais=datos_filtrados.groupby(pais)[ter].max()
+minimo_por_pais=datos_filtrados.groupby(pais)[ter].min()
+q1_por_pais=datos_filtrados.groupby(pais)[ter].quantile(0.25)
+q3_por_pais=datos_filtrados.groupby(pais)[ter].quantile(0.75)
+conteo_por_pais=base_datos[pais].value_counts()
+
+## Imprimir los datos
+print(f"Promedios por {promedio_por_pais}")
+print(f"Medianas por {mediana_por_pais}")
+print(f"Maximos por {maximo_por_pais}")
+print(f"Minimos por {minimo_por_pais}")
+print(f"Primer cuartil por {q1_por_pais}")
+print(f"Tercer cuartil por {q3_por_pais}")
+print(conteo_por_pais)
+
+## Calculo de promedio, mediana, cuartiles, maximos, minimos por estados
+promedio_por_estado=datos_filtrados.groupby(estado_orden)[ter].mean()
+mediana_por_estado=datos_filtrados.groupby(estado_orden)[ter].median()
+maximo_por_estado=datos_filtrados.groupby(estado_orden)[ter].max()
+minimo_por_estado=datos_filtrados.groupby(estado_orden)[ter].min()
+q1_por_estado=datos_filtrados.groupby(estado_orden)[ter].quantile(0.25)
+q3_por_estado=datos_filtrados.groupby(estado_orden)[ter].quantile(0.75)
+conteo_por_estado=base_datos[estado_orden].value_counts()
+
+## Imprimir los datos
+print(f"Promedios por {promedio_por_estado}")
+print(f"Medianas por {mediana_por_estado}")
+print(f"Maximos por {maximo_por_estado}")
+print(f"Minimos por {minimo_por_estado}")
+print(f"Primer cuartil por {q1_por_estado}")
+print(f"Tercer cuartil por {q3_por_estado}")
+print(conteo_por_estado)
+
+## Calculo de promedio, mediana, cuartiles, maximos, minimos por reparaciones
+promedio_por_reparacion=datos_filtrados.groupby(reparacion)[ter].mean()
+mediana_por_reparacion=datos_filtrados.groupby(reparacion)[ter].median()
+maximo_por_reparacion=datos_filtrados.groupby(reparacion)[ter].max()
+minimo_por_reparacion=datos_filtrados.groupby(reparacion)[ter].min()
+q1_por_reparacion=datos_filtrados.groupby(reparacion)[ter].quantile(0.25)
+q3_por_reparacion=datos_filtrados.groupby(reparacion)[ter].quantile(0.75)
+conteo_por_reparacion=base_datos[reparacion].value_counts()
+
+## Imprimir los datos
+print(f"Promedios por {promedio_por_reparacion}")
+print(f"Medianas por {mediana_por_reparacion}")
+print(f"Maximos por {maximo_por_reparacion}")
+print(f"Minimos por {minimo_por_reparacion}")
+print(f"Primer cuartil por {q1_por_reparacion}")
+print(f"Tercer cuartil por {q3_por_reparacion}")
+print(conteo_por_reparacion)
+
+## Calculo de promedio, mediana, cuartiles, maximos, minimos por individuos
+promedio_por_individuos=datos_filtrados.groupby(individuos)[ter].mean()
+mediana_por_individuos=datos_filtrados.groupby(individuos)[ter].median()
+maximo_por_individuos=datos_filtrados.groupby(individuos)[ter].max()
+minimo_por_individuos=datos_filtrados.groupby(individuos)[ter].min()
+q1_por_individuos=datos_filtrados.groupby(individuos)[ter].quantile(0.25)
+q3_por_individuos=datos_filtrados.groupby(individuos)[ter].quantile(0.75)
+conteo_por_individuos=base_datos[individuos].value_counts()
+
+## Imprimir los datos
+print(f"Promedios por {promedio_por_individuos}")
+print(f"Medianas por {mediana_por_individuos}")
+print(f"Maximos por {maximo_por_individuos}")
+print(f"Minimos por {minimo_por_individuos}")
+print(f"Primer cuartil por {q1_por_individuos}")
+print(f"Tercer cuartil por {q3_por_individuos}")
+print(conteo_por_individuos)
+
+## Histograma
+n, bins, patches=plt.hist(datos_filtrados[ter],bins=6)
+plt.xlabel("Dias de respuesta")
+plt.ylabel("Frecuencia")
+plt.title("Histograma de dias de respuesta")
+plt.grid(True)
+for count, bin_edge, patch in zip(n,bins,patches):
+    if count>0:
+        x= bin_edge + 0.5
+        y=count
+        plt.text(x,y,str(int(count)), ha="center", va="bottom")
+        
+## Pie chart pais
+plt.figure(figsize=(8,8))
+plt.pie(conteo_por_pais,labels=conteo_por_pais.index,autopct="%1.1f%%",startangle=90,rotatelabels=True, textprops={'fontsize': 8})
+plt.title("Distribucion por país",loc="left",y=1.1)
+plt.axis("equal")
+plt.tight_layout()
+
+## Pie chart estado
+plt.figure(figsize=(8,8))
+plt.pie(conteo_por_estado,labels=conteo_por_estado.index,autopct="%1.1f%%",startangle=90,rotatelabels=True, textprops={'fontsize': 8})
+plt.title("Distribucion por estado",loc="left",y=1.1)
+plt.axis("equal")
+plt.tight_layout()
+plt.show()
+
+## Diagrama de caja
+datos_filtrados2=base_datos[base_datos[ter]>=0][ter]
+plt.boxplot(datos_filtrados2)
+plt.xlabel('Variable X')
+plt.ylabel('Valor')
+plt.title('Diagrama de Caja')
+plt.show()
+
+## Series de tiempo
+base_datos[fecha_i]=pd.to_datetime(base_datos[fecha_i])
+agrupado=base_datos.groupby(base_datos[fecha_i].dt.to_period("M")).size().reset_index(name='Count')
+print(f"{agrupado}")
+agrupado=agrupado.sort_values(by=fecha_i)
+agrupado[fecha_i] = agrupado[fecha_i].astype(str)
+
+plt.figure(figsize=(10,6))
+plt.plot(agrupado[fecha_i],agrupado["Count"],marker="o")
+for i, txt in enumerate(agrupado['Count']):
+    plt.text(agrupado[fecha_i][i], txt, str(txt), ha='center', va='bottom')
+plt.title('Solicitudes por Mes')
+plt.xlabel('Mes')
+plt.ylabel('Solicitudes')
+plt.show()
