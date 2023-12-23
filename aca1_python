@@ -23,7 +23,7 @@ datos_filtrados=base_datos[base_datos[ter]>=0]
 
 ## Tiempo promedio de respuesta
 promedio_tiempo=datos_filtrados[ter].mean()
-print(f"Prueba{promedio_tiempo}")
+print(f"El tiempo promedio de respuesta es de {promedio_tiempo} dias")
 
 ## Calculo de promedio, mediana, cuartiles, maximos, minimos por paises
 promedio_por_pais=datos_filtrados.groupby(pais)[ter].mean()
