@@ -15,16 +15,16 @@ pais="País"
 estado_orden="Estado Orden"
 reparacion="Reparacion"
 individuos= "Producto"
-serial="País"
-unidades="Cant. PL."
 fecha_i="Fecha Ingreso"
 
 
 ## Definir las condiciones,(valores >=0)
 datos_filtrados=base_datos[base_datos[ter]>=0]
 
-prueba=datos_filtrados[ter].mean()
-print(f"Prueba{prueba}")
+## Tiempo promedio de respuesta
+promedio_tiempo=datos_filtrados[ter].mean()
+print(f"Prueba{promedio_tiempo}")
+
 ## Calculo de promedio, mediana, cuartiles, maximos, minimos por paises
 promedio_por_pais=datos_filtrados.groupby(pais)[ter].mean()
 mediana_por_pais=datos_filtrados.groupby(pais)[ter].median()
